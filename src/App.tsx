@@ -1,7 +1,8 @@
+import { ParallaxProvider } from "react-scroll-parallax";
 import "./App.css";
 
 function App() {
-  return <div className="bg-green-500 h-10"></div>;
+  return <ParallaxProvider>Welcome</ParallaxProvider>;
 }
 
 export default App;
