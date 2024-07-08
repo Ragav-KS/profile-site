@@ -1,11 +1,17 @@
 import { ParallaxProvider } from "react-scroll-parallax";
 import "./App.css";
-import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import { Outlet, RouterProvider, createBrowserRouter } from "react-router-dom";
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <div>Welcome</div>,
+    element: <Outlet />,
+    children: [
+      {
+        path: "/",
+        element: <div>Welcome</div>,
+      },
+    ],
   },
 ]);
 
