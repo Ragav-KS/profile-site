@@ -9,6 +9,9 @@ export default defineConfig({
     //add this property
     sourcemap: true,
   },
+  server: {
+    port: 4200,
+  },
   resolve: {
     alias: {
       src: path.resolve(__dirname, "src/"),
