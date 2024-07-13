@@ -1,6 +1,7 @@
 import { ParallaxProvider } from "react-scroll-parallax";
 import "./App.css";
 import { Outlet, RouterProvider, createBrowserRouter } from "react-router-dom";
+import { Home } from "./routes/Home";
 
 const router = createBrowserRouter([
   {
@@ -9,7 +10,7 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/",
-        element: <div>Welcome</div>,
+        element: <Home />,
       },
     ],
   },
