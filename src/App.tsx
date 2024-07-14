@@ -6,7 +6,11 @@ import { Home } from "./routes/Home";
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Outlet />,
+    element: (
+      <div id="scroll-wrapper" className="fixed overflow-hidden">
+        <Outlet />,
+      </div>
+    ),
     children: [
       {
         path: "/",
