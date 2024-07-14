@@ -1,4 +1,3 @@
-import { Property } from "csstype";
 import React, { useEffect, useState } from "react";
 import {
   FaAngular,
@@ -13,58 +12,59 @@ import { SiOpenai, SiSpring } from "react-icons/si";
 import profile_pic from "src/assets/Profile_Pic_23.jpg";
 
 export function Home() {
-  const [ticker, setRotationTicker] = useState(0);
+  const [angularTicker, setAngularTicker] = useState(0);
 
   useEffect(() => {
     const interval = setInterval(() => {
-      if (ticker > 2 * Math.PI) {
-        setRotationTicker(ticker - 2 * Math.PI);
-      }
+      setAngularTicker(angularTicker + Math.PI / 180 / 10);
 
-      setRotationTicker(ticker + Math.PI / 180 / 10);
+      document.documentElement.style.setProperty(
+        "--angularTicker",
+        `${angularTicker}rad`,
+      );
     }, 10);
 
     return () => clearInterval(interval);
-  }, [ticker]);
+  }, [angularTicker]);
 
   return (
     <div className="flex h-screen w-screen items-center justify-center bg-[#122B27]">
       <div className="h-40 w-40">
         <FaReact
           className="absolute-center scale-[3] text-[#239589] drop-shadow-[0_0_2px_black]"
-          style={useRotateAroundCenterStyle(ticker)}
+          style={useRotateAroundCenterStyle()}
         />
         <FaAws
           className="absolute-center scale-[3] text-[#239589] drop-shadow-[0_0_2px_black]"
-          style={useRotateAroundCenterStyle(ticker)}
+          style={useRotateAroundCenterStyle()}
         />
         <FaCloud
           className="absolute-center scale-[3] text-[#239589] drop-shadow-[0_0_2px_black]"
-          style={useRotateAroundCenterStyle(ticker)}
+          style={useRotateAroundCenterStyle()}
         />
         <FaAngular
           className="absolute-center scale-[3] text-[#239589] drop-shadow-[0_0_2px_black]"
-          style={useRotateAroundCenterStyle(ticker)}
+          style={useRotateAroundCenterStyle()}
         />
         <FaPython
           className="absolute-center scale-[3] text-[#239589] drop-shadow-[0_0_2px_black]"
-          style={useRotateAroundCenterStyle(ticker)}
+          style={useRotateAroundCenterStyle()}
         />
         <SiOpenai
           className="absolute-center scale-[3] text-[#239589] drop-shadow-[0_0_2px_black]"
-          style={useRotateAroundCenterStyle(ticker)}
+          style={useRotateAroundCenterStyle()}
         />
         <FaJava
           className="absolute-center scale-[3] text-[#239589] drop-shadow-[0_0_2px_black]"
-          style={useRotateAroundCenterStyle(ticker)}
+          style={useRotateAroundCenterStyle()}
         />
         <SiSpring
           className="absolute-center scale-[3] text-[#239589] drop-shadow-[0_0_2px_black]"
-          style={useRotateAroundCenterStyle(ticker)}
+          style={useRotateAroundCenterStyle()}
         />
         <FaDatabase
           className="absolute-center scale-[3] text-[#239589] drop-shadow-[0_0_2px_black]"
-          style={useRotateAroundCenterStyle(ticker)}
+          style={useRotateAroundCenterStyle()}
         />
         <img
           src={profile_pic}
@@ -76,7 +76,7 @@ export function Home() {
   );
 }
 
-function useRotateAroundCenterStyle(ticker: number): React.CSSProperties {
+function useRotateAroundCenterStyle(): React.CSSProperties {
   const vmax = Math.max(window.innerWidth, window.innerHeight);
 
   const r = useRandom(160, vmax / 2 - 50);
@@ -85,13 +85,12 @@ function useRotateAroundCenterStyle(ticker: number): React.CSSProperties {
   const movementDirection = useRandom(-1, 1) > 0 ? 1 : -1;
   const movementSpeed = movementDirection * useRandom(200, 600);
 
+  const translateX = `calc(${r}px * cos((var(--angularTicker) + ${initialDegree}rad) * ${movementSpeed} / ${r}))`;
+  const translateY = `calc(${r}px * sin((var(--angularTicker) + ${initialDegree}rad) * ${movementSpeed} / ${r}))`;
+
   return {
-    rotate: `${ticker * rotationSpeed}rad`,
-    translate: getCSSTranslateProperty(
-      r,
-      ((ticker + initialDegree) * movementSpeed) / r,
-      "px",
-    ),
+    rotate: `calc(var(--angularTicker) * ${rotationSpeed})`,
+    translate: `${translateX} ${translateY}`,
   };
 }
 
@@ -101,15 +100,4 @@ function useRandom(min: number, max: number) {
   });
 
   return random;
-}
-
-function getCSSTranslateProperty(
-  r: number,
-  degree: number,
-  unit: string,
-): Property.Translate {
-  const x = r * Math.cos(degree);
-  const y = r * Math.sin(degree);
-
-  return `${x}${unit} ${y}${unit}`;
 }
