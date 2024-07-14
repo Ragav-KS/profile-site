@@ -2,6 +2,7 @@ import { ParallaxProvider } from "react-scroll-parallax";
 import "./App.css";
 import { Outlet, RouterProvider, createBrowserRouter } from "react-router-dom";
 import { Home } from "./routes/Home";
+import { useAngularTicker } from "./hooks/useAngularTicker";
 
 const router = createBrowserRouter([
   {
@@ -21,6 +22,8 @@ const router = createBrowserRouter([
 ]);
 
 function App() {
+  useAngularTicker();
+
   return (
     <ParallaxProvider>
       <RouterProvider router={router} />
